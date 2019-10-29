@@ -1415,15 +1415,19 @@ void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
 
     case AND:
       if (tmode == 'n' && result != 0) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 'f' && result != 0) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 's' && result != 0) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 'b' && result != 1) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       break;
@@ -1432,15 +1436,19 @@ void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
 
     case OR:
       if (tmode == 'n' && result != 0) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 'f' && result != 1) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 's' && result != 1) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 'b' && result != 1) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       break;
@@ -1450,15 +1458,20 @@ void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
 
     case NAND:
       if (tmode == 'n' && result != 1) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 'f' && result != 1) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 's' && result != 1) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
+        
       }
       else if (tmode == 'b' && result != 0) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       break;
@@ -1472,12 +1485,15 @@ void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 'f' && result != 1) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 's' && result != 1) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       else if (tmode == 'b' && result != 0) {
+        printError(pin1,pin2,pin3);
         addBrokenPins(pin1, pin2, pin3);
       }
       break;
@@ -1489,8 +1505,11 @@ void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
 
 void addBrokenPins(byte pin1, byte pin2, byte pin3) {
   brokenPins.concat((String)pin1);
+  brokenPins.concat(",");
   brokenPins.concat((String)pin2);
+  brokenPins.concat(",");
   brokenPins.concat((String)pin3);
+  brokenPins.concat(",");
 }
 
 
