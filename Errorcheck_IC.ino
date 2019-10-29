@@ -6,7 +6,12 @@ const int pins[] = {30, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13}; //Pins på arduino
 enum state {NOT, OR, AND, XOR, NAND, NOR, NONE};
 
 state mode;
-String brokenPins = "";
+String brokenPins;
+
+bool bPinSet1;
+bool bPinSet2;
+bool bPinSet3;
+bool bPinSet4;
 
 void setup() {
   // put your setup code here, to run once:
@@ -19,7 +24,14 @@ void setup() {
 }
 
 void loop() {
-
+  bPinSet1 = false;
+  bPinSet2 = false;
+  bPinSet3 = false;
+  bPinSet4 = false;
+  Serial.println();
+  Serial.println();
+  Serial.println();
+  brokenPins = "";
   readInput();
 
 
@@ -269,623 +281,6 @@ void testNot() {
 
 
 
-
-
-/*
-
-void runTestAnd(int pin1, int pin2, int pin3) {
-
-  bool pinsBroke = false;
-  Serial.print("Tester pin ");
-  if (pin1 == pins[0]) {
-    Serial.print("1");
-  }
-  else {
-    Serial.print(pin1);
-  }
-  Serial.print(" og ");
-  Serial.print(pin2);
-  Serial.println("...");
-  digitalWrite(pin1, LOW);
-  digitalWrite(pin2, LOW);
-  bool x = digitalRead(pin3);
-  if (x == HIGH) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.print(" og ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, LOW);
-    digitalWrite(pin2, LOW);
-    x = digitalRead(pin3);
-    if (x == HIGH) {
-      Serial.println("Output ");
-      Serial.print(pin3);
-      Serial.println("gir HIGH selv om inputs er low...");
-      pinsBroke = true;
-    }
-  }
-
-
-
-  delay(500);
-  digitalWrite(pin1, HIGH);
-  digitalWrite(pin2, HIGH);
-  x = digitalRead(pin3);
-  if (x == LOW) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.print(" og ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, HIGH);
-    digitalWrite(pin2, HIGH);
-    x = digitalRead(pin3);
-    if (x == LOW) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.println(" gir LOW selv om inputs er HIGH...");
-      pinsBroke = true;
-    }
-  }
-
-  if (pinsBroke == true) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin3);
-    brokenPins.concat(",");
-  }
-}
-
-
-void testAnd() {
-  pinMode(pins[0], OUTPUT);
-  pinMode(pins[1], OUTPUT);
-  pinMode(pins[2], INPUT);
-  pinMode(pins[3], OUTPUT);
-  pinMode(pins[4], OUTPUT);
-  pinMode(pins[5], INPUT);
-  pinMode(pins[11], OUTPUT);
-  pinMode(pins[10], OUTPUT);
-  pinMode(pins[9], INPUT);
-  pinMode(pins[8], OUTPUT);
-  pinMode(pins[7], OUTPUT);
-  pinMode(pins[6], INPUT);
-
-  byte in1;
-  byte in2;
-  byte out;
-  Serial.println("Starter test av AND chip");
-  brokenPins = "";
-
-
-
-  //tester pin 1 og 2
-  in1 = pins[0];
-  in2 = pins[1];
-  out = pins[2];
-  delay(500);
-  runTestAnd(in1, in2, out);
-
-  //tester pin 4 og 5
-  in1 = pins[3];
-  in2 = pins[4];
-  out = pins[5];
-  delay(500);
-  runTestAnd(in1, in2, out);
-
-
-
-  //tester pin 13 og 12
-  in1 = pins[11];
-  in2 = pins[10];
-  out = pins[9];
-  delay(500);
-  runTestAnd(in1, in2, out);
-
-
-
-  //tester pin 10 og 9
-  in1 = pins[8];
-  in2 = pins[7];
-  out = pins[6];
-  delay(500);
-  runTestAnd(in1, in2, out);
-
-
-
-
-
-  if (brokenPins != "") {
-    Serial.print("Ødelagte pinns: ");
-    Serial.println(brokenPins);
-
-  } else {
-    Serial.println("Alt gikk vell");
-  }
-
-  Serial.println("Restart program for å teste på nytt");
-  while (1);
-
-
-}
-*/
-/*
-void runTestOr(int pin1, int pin2, int pin3) {
-  bool pin1Broke = false;
-  bool pin2Broke = false;
-  bool pin3Broke = false;
-
-
-  Serial.print("Tester pin ");
-  if (pin1 == pins[0]) {
-    Serial.print("1");
-  }
-  else {
-    Serial.print(pin1);
-  }
-  Serial.print(" og ");
-  Serial.print(pin2);
-  Serial.println("...");
-  digitalWrite(pin1, LOW);
-  digitalWrite(pin2, LOW);
-  bool x = digitalRead(pin3);
-  if (x == HIGH) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.print(" og ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, LOW);
-    digitalWrite(pin2, LOW);
-    x = digitalRead(pin3);
-    if (x == HIGH) {
-      Serial.println("Output ");
-      Serial.print(pin3);
-      Serial.println("gir HIGH selv om inputs er low...");
-      pin3Broke = true;
-    }
-  }
-
-
-
-  delay(500);
-  digitalWrite(pin1, HIGH);
-  digitalWrite(pin2, LOW);
-  x = digitalRead(pin3);
-  if (x == LOW) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, HIGH);
-    digitalWrite(pin2, LOW);
-    x = digitalRead(pin3);
-    if (x == LOW) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.print(" gir LOW selv om input ");
-      if (pin1 == pins[0]) {
-        Serial.print("1");
-      }
-      else {
-        Serial.print(pin1);
-      }
-      Serial.println(" er HIGH...");
-      pin1Broke = true;
-    }
-  }
-
-  delay(500);
-  digitalWrite(pin1, LOW);
-  digitalWrite(pin2, HIGH);
-  x = digitalRead(pin3);
-  if (x == LOW) {
-    Serial.print("Feil ved test av pin ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, LOW);
-    digitalWrite(pin2, HIGH);
-    x = digitalRead(pin3);
-    if (x == LOW) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.print(" gir LOW selv om input ");
-      Serial.print(pin2);
-      Serial.println(" er HIGH...");
-      pin2Broke = true;
-
-    }
-
-
-  }
-  if (pin3Broke == true) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin3);
-    brokenPins.concat(",");
-  } else if (pin1Broke == true && pin2Broke == false) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-  } else if (pin2Broke == true && pin1Broke == false) {
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-  } else if (pin1Broke == true && pin2Broke == true) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin3);
-    brokenPins.concat(",");
-  }
-
-}
-
-void testOr() {
-  pinMode(pins[0], OUTPUT);
-  pinMode(pins[1], OUTPUT);
-  pinMode(pins[2], INPUT);
-  pinMode(pins[3], OUTPUT);
-  pinMode(pins[4], OUTPUT);
-  pinMode(pins[5], INPUT);
-  pinMode(pins[11], OUTPUT);
-  pinMode(pins[10], OUTPUT);
-  pinMode(pins[9], INPUT);
-  pinMode(pins[8], OUTPUT);
-  pinMode(pins[7], OUTPUT);
-  pinMode(pins[6], INPUT);
-
-  brokenPins = "";
-  int in1;
-  int in2;
-  int out;
-
-  Serial.println("Starter test av OR chip");
-
-  //tester pin 1 og 2
-  in1 = pins[0];
-  in2 = pins[1];
-  out = pins[2];
-  delay(500);
-  runTestOr(in1, in2, out);
-
-  //tester pin 4 og 5
-  in1 = pins[3];
-  in2 = pins[4];
-  out = pins[5];
-  delay(500);
-  runTestOr(in1, in2, out);
-
-
-  //tester pin 13 og 12
-  in1 = pins[11];
-  in2 = pins[10];
-  out = pins[9];
-  delay(500);
-  runTestOr(in1, in2, out);
-
-  //tester pin 10 og 9
-  in1 = pins[8];
-  in2 = pins[7];
-  out = pins[6];
-  delay(500);
-  runTestOr(in1, in2, out);
-
-
-  if (brokenPins != "") {
-    Serial.print("Ødelagte pinns: ");
-    Serial.println(brokenPins);
-
-  } else {
-    Serial.println("Alt gikk vell");
-  }
-
-  Serial.println("Restart program for å teste på nytt");
-  while (1);
-
-
-
-
-
-
-}
-*/
-/*
-void runTestXor(int pin1, int pin2, int pin3) {
-  bool pin1Broke = false;
-  bool pin2Broke = false;
-  bool pin3Broke = false;
-  Serial.print("Tester pin ");
-  if (pin1 == pins[0]) {
-    Serial.print("1");
-  }
-  else {
-    Serial.print(pin1);
-  }
-  Serial.print(" og ");
-  Serial.print(pin2);
-  Serial.println("...");
-
-
-
-
-  digitalWrite(pin1, LOW);
-  digitalWrite(pin2, LOW);
-  delay(30);
-  bool x = digitalRead(pin3);
-  if (x == HIGH) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.print(" og ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, LOW);
-    digitalWrite(pin2, LOW);
-    x = digitalRead(pin3);
-    if (x == HIGH) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.println(" gir HIGH selv om inputs er low...");
-      pin3Broke = true;
-
-    }
-  }
-
-
-
-  delay(500);
-  digitalWrite(pin1, HIGH);
-  digitalWrite(pin2, LOW);
-  delay(30);
-  x = digitalRead(pin3);
-  if (x == LOW) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, HIGH);
-    digitalWrite(pin2, LOW);
-    x = digitalRead(pin3);
-    if (x == LOW) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.print(" gir LOW selv om input ");
-      if (pin1 == pins[0]) {
-        Serial.print("1");
-      }
-      else {
-        Serial.print(pin1);
-      }
-      Serial.println(" er HIGH...");
-      pin1Broke = true;
-    }
-  }
-
-  delay(500);
-  digitalWrite(pin1, LOW);
-  digitalWrite(pin2, HIGH);
-  delay(30);
-  x = digitalRead(pin3);
-  if (x == LOW) {
-    Serial.print("Feil ved test av pin ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, LOW);
-    digitalWrite(pin2, HIGH);
-    x = digitalRead(pin3);
-    if (x == LOW) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.print(" gir LOW selv om input ");
-      Serial.print(pin2);
-      Serial.println(" er HIGH...");
-      pin2Broke = true;
-
-    }
-
-
-  }
-
-
-  if (pin1Broke == false && pin2Broke == false) {
-    delay(500);
-    digitalWrite(pin1, HIGH);
-    digitalWrite(pin2, HIGH);
-    x = digitalRead(pin3);
-    if (x == HIGH) {
-      Serial.print("Feil ved test av pin ");
-      Serial.print(pin2);
-      Serial.println("...");
-      Serial.println("Prøver igjen..");
-      delay(500);
-      digitalWrite(pin1, HIGH);
-      digitalWrite(pin2, HIGH);
-      x = digitalRead(pin3);
-      if (x == HIGH) {
-        Serial.print("Output ");
-        Serial.print(pin3);
-        Serial.println(" gir HIGH selv om begge inputs er HIGH");
-        pin3Broke = true;
-
-
-      }
-
-
-    }
-  }
-
-  if (pin3Broke == true) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin3);
-    brokenPins.concat(",");
-  } else if (pin1Broke == true && pin2Broke == false) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-  } else if (pin2Broke == true && pin1Broke == false) {
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-  } else if (pin1Broke == true && pin2Broke == true) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin3);
-    brokenPins.concat(",");
-  }
-
-}
-
-void testXor() {
-  pinMode(pins[0], OUTPUT);
-  pinMode(pins[1], OUTPUT);
-  pinMode(pins[2], INPUT);
-  pinMode(pins[3], OUTPUT);
-  pinMode(pins[4], OUTPUT);
-  pinMode(pins[5], INPUT);
-  pinMode(pins[11], OUTPUT);
-  pinMode(pins[10], OUTPUT);
-  pinMode(pins[9], INPUT);
-  pinMode(pins[8], OUTPUT);
-  pinMode(pins[7], OUTPUT);
-  pinMode(pins[6], INPUT);
-
-
-  brokenPins = "";
-  int in1;
-  int in2;
-  int out;
-
-  Serial.println("Starter test av XOR chip");
-
-  //tester pin 1 og 2
-  in1 = pins[0];
-  in2 = pins[1];
-  out = pins[2];
-  delay(500);
-  runTestXor(in1, in2, out);
-
-  //tester pin 4 og 5
-  in1 = pins[3];
-  in2 = pins[4];
-  out = pins[5];
-  delay(500);
-  runTestXor(in1, in2, out);
-
-  //tester pin 13 og 12
-  in1 = pins[11];
-  in2 = pins[10];
-  out = pins[9];
-  delay(500);
-  runTestXor(in1, in2, out);
-
-  //tester pin 10 og 9
-  in1 = pins[8];
-  in2 = pins[7];
-  out = pins[6];
-  delay(500);
-  runTestXor(in1, in2, out);
-
-
-
-  if (brokenPins != "") {
-    Serial.print("Ødelagte pinns: ");
-    Serial.println(brokenPins);
-
-  } else {
-    Serial.println("Alt gikk vell");
-  }
-
-  Serial.println("Restart program for å teste på nytt");
-  while (1);
-
-}
-*/
 void runTestNor(int pin1, int pin2, int pin3) {
   bool pin1Broke = false;
   bool pin2Broke = false;
@@ -1094,244 +489,7 @@ void testNor() {
 
 }
 
-/*
-void runTestNand(int pin1, int pin2, int pin3) {
-  bool pin1Broke = false;
-  bool pin2Broke = false;
-  bool pin3Broke = false;
-  Serial.print("Tester pin ");
-  if (pin1 == pins[0]) {
-    Serial.print("1");
-  }
-  else {
-    Serial.print(pin1);
-  }
-  Serial.print(" og ");
-  Serial.print(pin2);
-  Serial.println("...");
 
-
-  digitalWrite(pin1, LOW);
-  digitalWrite(pin2, LOW);
-  delay(30);
-  bool x = digitalRead(pin3);
-  if (x == LOW) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.print(" og ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, LOW);
-    digitalWrite(pin2, LOW);
-    x = digitalRead(pin3);
-    if (x == LOW) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.println(" gir LOW selv om inputs er low...");
-      pin3Broke = true;
-    }
-  }
-
-  digitalWrite(pin1, HIGH);
-  digitalWrite(pin2, LOW);
-  delay(30);
-  x = digitalRead(pin3);
-  if (x == LOW) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.print(" og ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, HIGH);
-    digitalWrite(pin2, LOW);
-    x = digitalRead(pin3);
-    if (x == LOW) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.print(" gir LOW selv om input ");
-      Serial.print(pin2);
-      Serial.println(" er low...");
-      pin3Broke = true;
-    }
-  }
-
-  digitalWrite(pin1, LOW);
-  digitalWrite(pin2, HIGH);
-  delay(30);
-  x = digitalRead(pin3);
-  if (x == LOW) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.print(" og ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, LOW);
-    digitalWrite(pin2, HIGH);
-    x = digitalRead(pin3);
-    if (x == LOW) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.println(" gir LOW selv om input ");
-      if (pin1 == pins[0]) {
-        Serial.print("1");
-      }
-      else {
-        Serial.print(pin1);
-      }
-      Serial.println(" er low...");
-      pin3Broke = true;
-    }
-  }
-
-  digitalWrite(pin1, HIGH);
-  digitalWrite(pin2, HIGH);
-  delay(30);
-  x = digitalRead(pin3);
-  if (x == HIGH) {
-    Serial.print("Feil ved test av pin ");
-    if (pin1 == pins[0]) {
-      Serial.print("1");
-    }
-    else {
-      Serial.print(pin1);
-    }
-    Serial.print(" og ");
-    Serial.print(pin2);
-    Serial.println("...");
-    Serial.println("Prøver igjen..");
-    delay(500);
-    digitalWrite(pin1, HIGH);
-    digitalWrite(pin2, HIGH);
-    x = digitalRead(pin3);
-    if (x == HIGH) {
-      Serial.print("Output ");
-      Serial.print(pin3);
-      Serial.println(" gir HIGH selv om inputs er HIGH... ");
-      pin3Broke = true;
-    }
-  }
-
-
-  if (pin3Broke == true) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin3);
-    brokenPins.concat(",");
-  } else if (pin1Broke == true && pin2Broke == false) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-  } else if (pin2Broke == true && pin1Broke == false) {
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-  } else if (pin1Broke == true && pin2Broke == true) {
-    if (pin1 == pins[0]) {
-      brokenPins.concat("1");
-    }
-    else {
-      brokenPins.concat((String)pin1);
-    }
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin2);
-    brokenPins.concat(",");
-    brokenPins.concat((String)pin3);
-    brokenPins.concat(",");
-  }
-}
-
-
-void testNand() {
-  pinMode(pins[0], OUTPUT);
-  pinMode(pins[1], OUTPUT);
-  pinMode(pins[2], INPUT);
-  pinMode(pins[3], OUTPUT);
-  pinMode(pins[4], OUTPUT);
-  pinMode(pins[5], INPUT);
-  pinMode(pins[11], OUTPUT);
-  pinMode(pins[10], OUTPUT);
-  pinMode(pins[9], INPUT);
-  pinMode(pins[8], OUTPUT);
-  pinMode(pins[7], OUTPUT);
-  pinMode(pins[6], INPUT);
-
-  brokenPins = "";
-  int in1;
-  int in2;
-  int out;
-  Serial.println("Starter test av NAND..");
-
-  //tester pin 1 og 2
-  in1 = pins[0];
-  in2 = pins[1];
-  out = pins[2];
-  delay(500);
-  runTestNand(in1, in2, out);
-
-  //tester pin 4 og 5
-  in1 = pins[3];
-  in2 = pins[4];
-  out = pins[5];
-  delay(500);
-  runTestNand(in1, in2, out);
-
-  //tester pin 13 og 12
-  in1 = pins[11];
-  in2 = pins[10];
-  out = pins[9];
-  delay(500);
-  runTestNand(in1, in2, out);
-
-  //tester pin 10 og 9
-  in1 = pins[8];
-  in2 = pins[7];
-  out = pins[6];
-  delay(500);
-  runTestNand(in1, in2, out);
-
-  if (brokenPins != "") {
-    Serial.print("Ødelagte pinns: ");
-    Serial.println(brokenPins);
-
-  } else {
-    Serial.println("Alt gikk vell");
-  }
-
-  Serial.println("Restart program for å teste på nytt");
-  while (1);
-}
-*/
 
 void runtestInputInputOutput() {
   pinMode(pins[0], OUTPUT);
@@ -1348,7 +506,6 @@ void runtestInputInputOutput() {
   pinMode(pins[6], INPUT);
 
   //testing pins 1-3
-
   testPinsOff(pins[0], pins[1], pins[2]);
   testFirstPin(pins[0], pins[1], pins[2]);
   testSecondPin(pins[0], pins[1], pins[2]);
@@ -1372,30 +529,49 @@ void runtestInputInputOutput() {
   testSecondPin(pins[8], pins[7], pins[6]);
   testBothPins(pins[8], pins[7], pins[6]);
 
-  Serial.print("Broken pins: ");
-  Serial.print(brokenPins);
-  Serial.println(".");
-  loop();
+
+  addBrokenPins();
+
+  if (brokenPins == "") {
+    Serial.println("IC status: OK");
+    Serial.println("Restarting program...");
+    loop();
+  }
+  else {
+    Serial.print("Broken pins: ");
+    Serial.print(brokenPins);
+    Serial.println(".");
+    loop();
+  }
+
 }
 
+
+//testing result when both inputs is low
 bool testPinsOff(byte pin1, byte pin2, byte pin3) {
   digitalWrite(pin1, LOW);
   digitalWrite(pin2, LOW);
   checkTest(digitalRead(pin3), pin1, pin2, pin3, 'n');
 }
 
+
+//testing result when first input is high
 bool testFirstPin(byte pin1, byte pin2, byte pin3) {
   digitalWrite(pin1, HIGH);
   digitalWrite(pin2, LOW);
   checkTest(digitalRead(pin3), pin1, pin2, pin3, 'f');
 }
 
+
+//testing result when second input is high
 bool testSecondPin(byte pin1, byte pin2, byte pin3) {
   digitalWrite(pin1, LOW);
   digitalWrite(pin2, HIGH);
   checkTest(digitalRead(pin3), pin1, pin2, pin3, 's');
 }
 
+
+//testing result when both input is high
 bool testBothPins(byte pin1, byte pin2, byte pin3) {
   digitalWrite(pin1, HIGH);
   digitalWrite(pin2, HIGH);
@@ -1403,27 +579,31 @@ bool testBothPins(byte pin1, byte pin2, byte pin3) {
 }
 
 
+
+//checks the result
 void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
+
+
   switch (mode) {
 
 
 
     case AND:
       if (tmode == 'n' && result != 0) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 'f' && result != 0) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 's' && result != 0) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 'b' && result != 1) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       break;
 
@@ -1431,20 +611,20 @@ void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
 
     case OR:
       if (tmode == 'n' && result != 0) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 'f' && result != 1) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 's' && result != 1) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 'b' && result != 1) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       break;
 
@@ -1453,21 +633,21 @@ void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
 
     case NAND:
       if (tmode == 'n' && result != 1) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 'f' && result != 1) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 's' && result != 1) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
-        
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
+
       }
       else if (tmode == 'b' && result != 0) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       break;
 
@@ -1476,20 +656,20 @@ void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
 
     case XOR:
       if (tmode == 'n' && result != 0) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 'f' && result != 1) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 's' && result != 1) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       else if (tmode == 'b' && result != 0) {
-        printError(pin1,pin2,pin3);
-        addBrokenPins(pin1, pin2, pin3);
+        printError(pin1, pin2, pin3);
+        setBrokenPins(pin1);
       }
       break;
     default:
@@ -1498,17 +678,40 @@ void checkTest(bool result, byte pin1, byte pin2, byte pin3, char tmode) {
 }
 
 
-void addBrokenPins(byte pin1, byte pin2, byte pin3) {
-  brokenPins.concat((String)pin1);
-  brokenPins.concat(",");
-  brokenPins.concat((String)pin2);
-  brokenPins.concat(",");
-  brokenPins.concat((String)pin3);
-  brokenPins.concat(",");
+void setBrokenPins(byte pin1) {
+  
+  if(pin1==pins[0]){
+      bPinSet1 = true;
+    }
+    else if(pin1 == pins[3]){
+      bPinSet2 = true;
+      }
+     else if (pin1 == pins[11]){
+      bPinSet3 = true;
+      }
+     else if (pin1 == pins[8]){
+      bPinSet4 = true;
+      }
+ 
+}
+
+void addBrokenPins() {
+  if (bPinSet1 == true) {
+    brokenPins.concat("1,2,3,");
+  }
+  else if (bPinSet2 == true) {
+    brokenPins.concat("4,5,6,");
+  }
+  else if (bPinSet3 == true) {
+    brokenPins.concat("13,12,11,");
+  }
+  else if (bPinSet4 == true) {
+    brokenPins.concat("10,9,8,");
+  }
 }
 
 
-void printError(byte pin1,byte pin2, byte pin3){
+void printError(byte pin1, byte pin2, byte pin3) {
   Serial.print("Error when testing pins: ");
   Serial.print(pin1);
   Serial.print(", ");
@@ -1516,4 +719,4 @@ void printError(byte pin1,byte pin2, byte pin3){
   Serial.print(", ");
   Serial.print(pin3);
   Serial.println("...");
-  }
+}
