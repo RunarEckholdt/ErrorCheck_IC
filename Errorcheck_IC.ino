@@ -1340,3 +1340,33 @@ void testNand() {
   Serial.println("Restart program for å teste på nytt");
   while (1);
 }
+
+void runtest_input_input_output(state mode){
+  pinMode(pins[0], OUTPUT);
+  pinMode(pins[1], OUTPUT);
+  pinMode(pins[2], INPUT);
+  pinMode(pins[3], OUTPUT);
+  pinMode(pins[4], OUTPUT);
+  pinMode(pins[5], INPUT);
+  pinMode(pins[11], OUTPUT);
+  pinMode(pins[10], OUTPUT);
+  pinMode(pins[9], INPUT);
+  pinMode(pins[8], OUTPUT);
+  pinMode(pins[7], OUTPUT);
+  pinMode(pins[6], INPUT);
+  
+  
+  switch(mode){
+    case AND:
+      break;
+    case OR:
+      break;
+    case NAND:
+      break;
+    case XOR:
+      break;
+    default:
+      break;
+  } 
+  
+  }
