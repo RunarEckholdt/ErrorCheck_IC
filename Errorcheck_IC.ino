@@ -64,19 +64,19 @@ void readInput() {
       testNot();
       break;
     case AND:
-      testAnd();
+      runtestInputInputOutput();
       break;
     case OR:
-      testOr();
+      runtestInputInputOutput();
       break;
     case XOR:
-      testXor();
+      runtestInputInputOutput();
       break;
     case NOR:
       testNor();
       break;
     case NAND:
-      testNand();
+      runtestInputInputOutput();
       break;
     default:
       Serial.println("Det er ikke et gyldig input. Prøv igjen");
@@ -271,7 +271,7 @@ void testNot() {
 
 
 
-
+/*
 
 void runTestAnd(int pin1, int pin2, int pin3) {
 
@@ -429,20 +429,9 @@ void testAnd() {
   while (1);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
+*/
+/*
 void runTestOr(int pin1, int pin2, int pin3) {
   bool pin1Broke = false;
   bool pin2Broke = false;
@@ -653,7 +642,8 @@ void testOr() {
 
 
 }
-
+*/
+/*
 void runTestXor(int pin1, int pin2, int pin3) {
   bool pin1Broke = false;
   bool pin2Broke = false;
@@ -895,7 +885,7 @@ void testXor() {
   while (1);
 
 }
-
+*/
 void runTestNor(int pin1, int pin2, int pin3) {
   bool pin1Broke = false;
   bool pin2Broke = false;
@@ -1104,7 +1094,7 @@ void testNor() {
 
 }
 
-
+/*
 void runTestNand(int pin1, int pin2, int pin3) {
   bool pin1Broke = false;
   bool pin2Broke = false;
@@ -1281,6 +1271,7 @@ void runTestNand(int pin1, int pin2, int pin3) {
   }
 }
 
+
 void testNand() {
   pinMode(pins[0], OUTPUT);
   pinMode(pins[1], OUTPUT);
@@ -1340,8 +1331,9 @@ void testNand() {
   Serial.println("Restart program for å teste på nytt");
   while (1);
 }
+*/
 
-void runtest_input_input_output() {
+void runtestInputInputOutput() {
   pinMode(pins[0], OUTPUT);
   pinMode(pins[1], OUTPUT);
   pinMode(pins[2], INPUT);
@@ -1380,7 +1372,10 @@ void runtest_input_input_output() {
   testSecondPin(pins[8], pins[7], pins[6]);
   testBothPins(pins[8], pins[7], pins[6]);
 
-  
+  Serial.print("Broken pins: ");
+  Serial.print(brokenPins);
+  Serial.println(".");
+  loop();
 }
 
 bool testPinsOff(byte pin1, byte pin2, byte pin3) {
